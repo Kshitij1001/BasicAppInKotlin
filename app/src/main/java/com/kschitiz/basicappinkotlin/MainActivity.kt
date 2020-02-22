@@ -14,10 +14,21 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,"Button pressed",Toast.LENGTH_SHORT).show()
         }
         var yo = ""
+        val intentTo2ndActivity = Intent(this,SecondActivity::class.java)
         btnNxtActivity.setOnClickListener {
             yo = enterMsg.text.toString()
             Toast.makeText(this,"You entered $yo",Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this,SecondActivity::class.java))
+            intentTo2ndActivity.putExtra("msg", yo)
+            startActivity(intentTo2ndActivity)
+        }
+
+        btnShare.setOnClickListener {
+            yo = enterMsg.text.toString()
+            val shareActivity = Intent()
+            shareActivity.action = Intent.ACTION_SEND
+            shareActivity.putExtra(Intent.EXTRA_TEXT, yo)
+            shareActivity.type = "text/plain"
+            startActivity(Intent.createChooser(shareActivity,"Share to: "))
         }
     }
 }
